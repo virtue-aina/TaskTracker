@@ -1,6 +1,5 @@
-package dev.virtue.tasktracker;
+package dev.virtue.tasktracker.domain.entities;
 
-import dev.virtue.tasktracker.domain.entities.Task;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

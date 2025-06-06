@@ -1,4 +1,8 @@
-package dev.virtue.tasktracker.domain.entities;
+package dev.virtue.tasktracker.domain.dto;
+
+import dev.virtue.tasktracker.domain.entities.Task;
+import dev.virtue.tasktracker.domain.entities.TaskPriority;
+import dev.virtue.tasktracker.domain.entities.TaskStatus;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

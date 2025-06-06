@@ -1,6 +1,5 @@
 package dev.virtue.tasktracker.domain.entities;
 
-import dev.virtue.tasktracker.TaskList;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
