@@ -8,6 +8,12 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity class representing a task in the task tracker system.
+ * This class is mapped to the "tasks" table in the database.
+ * It contains information about a task such as its title, description,
+ * deadline, priority, status, and its relationship with a task list.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,37 +23,83 @@ import java.util.UUID;
 @Entity
 @Table(name = "tasks")
 public class Task {
+    /**
+     * Unique identifier for the task.
+     * This field is automatically generated and cannot be updated.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", updatable = false, nullable = false)
-   private UUID id;
+    private UUID id;
+
+    /**
+     * Title of the task.
+     * This field is required and can be updated.
+     */
     @Column(name = "title", updatable = true, nullable = false )
-   private String title;
+    private String title;
 
-   @Column(name = "description")
-   private String description;
+    /**
+     * Detailed description of the task.
+     * This field is optional.
+     */
+    @Column(name = "description")
+    private String description;
 
-   @Column(name = "dead_line")
-   private LocalDateTime deadline;
+    /**
+     * Deadline by which the task should be completed.
+     * This field is optional.
+     */
+    @Column(name = "dead_line")
+    private LocalDateTime deadline;
 
-   @Column(name = "priority")
-   private TaskPriority priority;
+    /**
+     * Priority level of the task (HIGH, MEDIUM, LOW).
+     * This field is optional.
+     */
+    @Column(name = "priority")
+    private TaskPriority priority;
 
-   @Column(name = "status")
-   private TaskStatus status;
+    /**
+     * Current status of the task (OPEN, CLOSED).
+     * This field is optional.
+     */
+    @Column(name = "status")
+    private TaskStatus status;
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "task_list_id")
-   private TaskList taskList;
+    /**
+     * The task list to which this task belongs.
+     * This is a many-to-one relationship, where many tasks can belong to one task list.
+     * This field is lazily loaded to improve performance.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_list_id")
+    private TaskList taskList;
 
-   @Column(name = "created")
-   private LocalDateTime created;
+    /**
+     * Timestamp when the task was created.
+     * This field is optional.
+     */
+    @Column(name = "created")
+    private LocalDateTime created;
 
-   @Column(name = "updated")
-   private LocalDateTime updated;
+    /**
+     * Timestamp when the task was last updated.
+     * This field is optional.
+     */
+    @Column(name = "updated")
+    private LocalDateTime updated;
 
 
 
+    /**
+     * Compares this task with another object for equality.
+     * Two tasks are considered equal if they have the same non-null ID.
+     * This method handles Hibernate proxies correctly.
+     *
+     * @param o The object to compare with this task
+     * @return true if the objects are equal, false otherwise
+     */
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
@@ -59,6 +111,12 @@ public class Task {
         return getId() != null && Objects.equals(getId(), task.getId());
     }
 
+    /**
+     * Returns a hash code value for this task.
+     * This method handles Hibernate proxies correctly.
+     *
+     * @return A hash code value for this task
+     */
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();

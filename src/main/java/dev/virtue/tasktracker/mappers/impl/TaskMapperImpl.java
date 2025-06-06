@@ -5,8 +5,19 @@ import dev.virtue.tasktracker.domain.entities.Task;
 import dev.virtue.tasktracker.mappers.TaskMapper;
 import org.springframework.stereotype.Component;
 
+/**
+ * Implementation of the TaskMapper interface that provides methods for converting
+ * between Task entities and TaskDto objects.
+ */
 @Component
 public class TaskMapperImpl implements TaskMapper {
+    /**
+     * Converts a TaskDto object to a Task entity.
+     * 
+     * @param dto The TaskDto object to convert
+     * @return A new Task entity with properties copied from the DTO
+     *         (taskList, created, and updated fields are set to null)
+     */
     @Override
     public Task fromDto(TaskDto dto) {
         return new Task(
@@ -21,6 +32,13 @@ public class TaskMapperImpl implements TaskMapper {
                 null);
     }
 
+    /**
+     * Converts a Task entity to a TaskDto object.
+     * 
+     * @param task The Task entity to convert
+     * @return A new TaskDto object with properties copied from the Task entity
+     *         (taskList, created, and updated fields are not included in the DTO)
+     */
     @Override
     public TaskDto toDto(Task task) {
         return new TaskDto(task.getId(),
