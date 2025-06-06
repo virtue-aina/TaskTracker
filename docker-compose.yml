@@ -1,0 +1,11 @@
+services:
+  #PostGresSQL
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: tasktracker
+      POSTGRES_PASSWORD: "A_Strong_P@ssw0rd_2024!"
+      POSTGRES_DB: tasktrackerdb
