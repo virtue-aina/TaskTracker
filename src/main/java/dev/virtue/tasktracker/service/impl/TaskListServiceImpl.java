@@ -90,4 +90,14 @@ public class TaskListServiceImpl implements TaskListService {
         return taskListRepo.save(existngTaskList);
 
     }
+
+    /**
+        * Deletes a task list by its ID.
+        *
+        * @param taskListId the ID of the task list to delete
+        */
+    @Override
+    public void deleteTaskList(UUID taskListId) {
+        taskListRepo.deleteById(taskListId);
+    }
 }

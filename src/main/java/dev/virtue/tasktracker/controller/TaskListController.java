@@ -4,7 +4,6 @@ import dev.virtue.tasktracker.domain.dto.TaskListDto;
 import dev.virtue.tasktracker.mappers.TaskListMapper;
 import dev.virtue.tasktracker.service.TaskListService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,9 +19,8 @@ public class TaskListController {
         this.taskListService = taskListService;
         this.taskListMapper = taskListMapper;
     }
-/**
+    /**
      * Lists all task lists.
-     *
      * @return a list of all task lists
      */
     @GetMapping
@@ -32,10 +30,8 @@ public class TaskListController {
                 .map(taskListMapper::toDto)
                 .toList();
     }
-
     /**
      * Creates a new task list.
-     *
      * @param taskListDto the task list to create
      * @return the created task list
      */
@@ -47,21 +43,16 @@ public class TaskListController {
     }
     /**
      * Retrieves a task list by its ID.
-     *
      * @param taskListId the ID of the task list to retrieve
      * @return the task list with the specified ID, or an empty Optional if not found
      */
-
-
     @GetMapping(path ="/{task_list_id}")
     public Optional<TaskListDto> getTaskListById(@PathVariable("task_list_id") UUID taskListId) {
         return taskListService.getTaskList(taskListId)
                 .map(taskListMapper::toDto);
     }
-
     /**
      * Updates an existing task list.
-     *
      * @param taskListId the ID of the task list to update
      * @param taskListDto the updated task list data
      * @return the updated task list
@@ -75,11 +66,12 @@ public class TaskListController {
         var updatedTaskList = taskListService.updateTaskList(taskListId, taskList);
         return taskListMapper.toDto(updatedTaskList);
     }
-/**
+    /**
      * Deletes a task list by its ID.
-     *
      * @param taskListId the ID of the task list to delete
      */
-    // Uncomment the following method when delete functionality is implemented
-   // @DeleteMapping(path ="/{task_list_id}")
+    @DeleteMapping(path ="/{task_list_id}")
+    public void deleteTaskList(@PathVariable("task_list_id") UUID taskListId) {
+        taskListService.deleteTaskList(taskListId);
+    }
 }

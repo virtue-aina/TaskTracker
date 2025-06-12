@@ -10,7 +10,6 @@ public interface TaskListMapper {
      * @return the entity
      */
     TaskList fromDto(TaskListDto taskListDto);
-
     /**
      * Converts an entity to a DTO
      * @param taskList the entity to convert
