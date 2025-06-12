@@ -18,7 +18,9 @@ public class TaskListServiceImpl implements TaskListService {
     }
 
     /**
-     * @return
+     * Lists all task lists.
+     *
+     * @return a list of all task lists
      */
     @Override
     public List<TaskList> listTaskLists() {
@@ -28,8 +30,10 @@ public class TaskListServiceImpl implements TaskListService {
     }
 
     /**
-     * @param taskList
-     * @return
+     * Creates a new task list.
+     *
+     * @param taskList the task list to create
+     * @return the created task list
      */
     @Override
     public TaskList createTaskList(TaskList taskList) {
