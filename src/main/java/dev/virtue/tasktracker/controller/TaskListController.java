@@ -20,7 +20,11 @@ public class TaskListController {
         this.taskListService = taskListService;
         this.taskListMapper = taskListMapper;
     }
-
+/**
+     * Lists all task lists.
+     *
+     * @return a list of all task lists
+     */
     @GetMapping
     public List<TaskListDto> listTaskLists() {
       return taskListService.listTaskLists()
@@ -29,18 +33,39 @@ public class TaskListController {
                 .toList();
     }
 
+    /**
+     * Creates a new task list.
+     *
+     * @param taskListDto the task list to create
+     * @return the created task list
+     */
     @PostMapping
     public TaskListDto createTaskList(@RequestBody TaskListDto taskListDto) {
         var taskList = taskListMapper.fromDto(taskListDto);
         var createdTaskList = taskListService.createTaskList(taskList);
         return taskListMapper.toDto(createdTaskList);
     }
+    /**
+     * Retrieves a task list by its ID.
+     *
+     * @param taskListId the ID of the task list to retrieve
+     * @return the task list with the specified ID, or an empty Optional if not found
+     */
+
+
     @GetMapping(path ="/{task_list_id}")
     public Optional<TaskListDto> getTaskListById(@PathVariable("task_list_id") UUID taskListId) {
         return taskListService.getTaskList(taskListId)
                 .map(taskListMapper::toDto);
     }
 
+    /**
+     * Updates an existing task list.
+     *
+     * @param taskListId the ID of the task list to update
+     * @param taskListDto the updated task list data
+     * @return the updated task list
+     */
     @PutMapping(path ="/{task_list_id}")
     public TaskListDto updateTaskList
             (@PathVariable("task_list_id") UUID taskListId,
@@ -50,6 +75,11 @@ public class TaskListController {
         var updatedTaskList = taskListService.updateTaskList(taskListId, taskList);
         return taskListMapper.toDto(updatedTaskList);
     }
-
+/**
+     * Deletes a task list by its ID.
+     *
+     * @param taskListId the ID of the task list to delete
+     */
+    // Uncomment the following method when delete functionality is implemented
    // @DeleteMapping(path ="/{task_list_id}")
 }
