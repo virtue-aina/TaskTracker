@@ -3,14 +3,12 @@ package dev.virtue.tasktracker.controller;
 import dev.virtue.tasktracker.domain.dto.TaskListDto;
 import dev.virtue.tasktracker.mappers.TaskListMapper;
 import dev.virtue.tasktracker.service.TaskListService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/v1/task-lists")
+@RequestMapping(path = "api/task-lists")
 public class TaskListController {
 
     private final TaskListService taskListService;
@@ -24,8 +22,16 @@ public class TaskListController {
 
     @GetMapping
     public List<TaskListDto> listTaskLists() {
-        // This method should return a list of TaskListDto objects.
-        // For now, we will return an empty list as a placeholder.
-        return List.of();
+      return taskListService.listTaskLists()
+                .stream()
+                .map(taskListMapper::toDto)
+                .toList();
+    }
+
+    @PostMapping
+    public TaskListDto createTaskList(@RequestBody TaskListDto taskListDto) {
+        var taskList = taskListMapper.fromDto(taskListDto);
+        var createdTaskList = taskListService.createTaskList(taskList);
+        return taskListMapper.toDto(createdTaskList);
     }
 }
