@@ -1,4 +1,4 @@
-package dev.virtue.tasktracker.controller;
+package dev.virtue.tasktracker.exception;
 
 import dev.virtue.tasktracker.domain.dto.ErrorResponses;
 import org.springframework.http.HttpStatus;

@@ -2,6 +2,7 @@ package dev.virtue.tasktracker.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.AllArgsConstructor;
 import org.hibernate.proxy.HibernateProxy;
 import java.time.LocalDateTime;
 import java.util.Objects;

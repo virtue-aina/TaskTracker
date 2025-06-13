@@ -3,6 +3,7 @@ package dev.virtue.tasktracker.service.impl;
 import dev.virtue.tasktracker.domain.entities.TaskList;
 import dev.virtue.tasktracker.repositories.TaskListRepo;
 import dev.virtue.tasktracker.service.TaskListService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -73,6 +74,7 @@ public class TaskListServiceImpl implements TaskListService {
      * @param taskList   the updated task list
      * @return the updated task list
      */
+    @Transactional
     @Override
     public TaskList updateTaskList(UUID taskListId, TaskList taskList) {
         if (null == taskList.getId()){
@@ -93,7 +95,6 @@ public class TaskListServiceImpl implements TaskListService {
 
     /**
         * Deletes a task list by its ID.
-        *
         * @param taskListId the ID of the task list to delete
         */
     @Override
