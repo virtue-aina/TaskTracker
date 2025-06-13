@@ -91,29 +91,6 @@ Tasktracker is a robust task management system built with Spring Boot that allow
 - `PUT /api/tasks/{id}` - Update a task
 - `DELETE /api/tasks/{id}` - Delete a task
 
-## Project Structure
-
-```
-Tasktracker/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── dev/virtue/tasktracker/
-│   │   │       ├── controller/       # REST controllers
-│   │   │       ├── domain/           # Domain models and DTOs
-│   │   │       ├── mappers/          # Object mappers
-│   │   │       ├── repositories/     # Data repositories
-│   │   │       ├── service/          # Business logic
-│   │   │       └── TasktrackerApplication.java
-│   │   └── resources/
-│   │       └── application.properties # Application configuration
-│   └── test/                         # Test classes
-├── docker-compose.yml                # Docker Compose configuration
-├── Dockerfile                        # Docker configuration
-├── pom.xml                           # Maven dependencies
-└── README.md                         # Project documentation
-```
-
 ## Testing
 
 Run the tests using Maven:
@@ -123,14 +100,6 @@ mvn test
 ```
 
 The test configuration uses an H2 in-memory database to avoid affecting the production database.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## License
 
