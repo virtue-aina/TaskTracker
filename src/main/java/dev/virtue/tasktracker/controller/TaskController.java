@@ -124,7 +124,6 @@ public class TaskController {
       var response = taskMapper.toDto(updatedTask);
     return ResponseEntity.status(HttpStatus.OK).body(response);
  }
-
 //    @DeleteMapping(path = "/{task_id}")
 //    public void deleteTask(
 //            @PathVariable("task_list_id") UUID taskListId,
