@@ -3,22 +3,22 @@ package dev.virtue.tasktracker.controller;
 import dev.virtue.tasktracker.domain.dto.TaskListDto;
 import dev.virtue.tasktracker.mappers.TaskListMapper;
 import dev.virtue.tasktracker.service.TaskListService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api/task-lists")
+@RequiredArgsConstructor
 public class TaskListController {
 
     private final TaskListService taskListService;
     private final TaskListMapper taskListMapper;
 
-    public TaskListController(TaskListService taskListService, TaskListMapper taskListMapper) {
-        this.taskListService = taskListService;
-        this.taskListMapper = taskListMapper;
-    }
+
     /**
      * Lists all task lists.
      * @return a list of all task lists

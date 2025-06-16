@@ -71,7 +71,7 @@ Tasktracker is a robust task management system built with Spring Boot that allow
    mvn spring-boot:run
    ```
 
-   The application will be available at `http://localhost:8082`
+   The application will be available at `http://localhost:8080`
 
 ## API Endpoints
 

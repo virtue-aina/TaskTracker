@@ -4,6 +4,7 @@ import dev.virtue.tasktracker.domain.entities.TaskList;
 import dev.virtue.tasktracker.repositories.TaskListRepo;
 import dev.virtue.tasktracker.service.TaskListService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,14 +13,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class TaskListServiceImpl implements TaskListService {
 
     private final TaskListRepo taskListRepo;
-
-    public TaskListServiceImpl(TaskListRepo taskListRepo) {
-        this.taskListRepo = taskListRepo;
-    }
-
     /**
      * Lists all task lists.
      *
