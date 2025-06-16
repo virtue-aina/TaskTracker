@@ -52,7 +52,7 @@ public class TaskListController {
      * @return a ResponseEntity containing the created TaskListDto
      */
     @PostMapping
-    public TaskListDto createTaskList(@RequestBody TaskListDto taskListDto) {
+    public ResponseEntity<TaskListDto> createTaskList(@RequestBody TaskListDto taskListDto) {
         var taskList = taskListMapper.fromDto(taskListDto);
         var createdTaskList = taskListService.createTaskList(taskList);
         var response =taskListMapper.toDto(createdTaskList);
