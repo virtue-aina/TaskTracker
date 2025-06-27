@@ -18,12 +18,24 @@ import java.util.UUID;
 public class FileAttachment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
+    @Column(name = "f_name", nullable = false)
     private String fileName;
+    @Column(name = "original_f_name", nullable = false)
     private String OriginalFileName;
+    @Column(name = "f_type", nullable = false)
     private String fileType;
+    @Column(name = "f_size", nullable = false)
     private Long size;
+
+    @Lob
+    @Column(name = "file_content", columnDefinition = "BLOB")
     private byte[] fileContent;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id", nullable = false)
+    private Task task;
 
     @Override
     public boolean equals(Object o) {
