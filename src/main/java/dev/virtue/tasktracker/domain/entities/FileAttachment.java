@@ -54,5 +54,4 @@ public class FileAttachment {
         return Objects.hash(id, storedFileName, OriginalFileName, fileType, size, task);
     }
 
-
 }
