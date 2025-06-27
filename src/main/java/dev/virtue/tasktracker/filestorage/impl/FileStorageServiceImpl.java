@@ -46,7 +46,9 @@ public class FileStorageServiceImpl implements FileStorageService {
     /**
      * Stores a file with the given name.
      * Validates the file properties and ensures it is not empty.
+     * Validates the content type of the file.
      * Normalizes the file path to prevent directory traversal attacks.
+     * Ensures the file is stored within the root directory.
      * Checks if the file already exists and replaces it if necessary.
      * @param file     The MultipartFile to store
      * @param fileName The name to store the file as
@@ -59,7 +61,8 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new StorageException("Cannot store empty file " + fileName);
         }
         String fileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-        String finalFileName = fileName + "." + fileExtension;
+        String finalFileName = getString(file, fileName, fileExtension);
+
 // Validate and normalize the file path
         Path targetLocation = rootLocation
                 .resolve(Paths.get(finalFileName))
@@ -77,6 +80,29 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new StorageException("Failed to store file " + finalFileName, e);
         }
     }
+
+    private static String getString(MultipartFile file, String fileName, String fileExtension) {
+        String finalFileName = fileName + "." + fileExtension;
+
+        String contentType = file.getContentType();
+        // Validate the content type of the file
+        if (contentType == null ||
+                (!contentType.equals("image/jpeg") &&
+                        !contentType.equals("image/png") &&
+                        !contentType.equals("application/pdf") &&
+                        !contentType.equals("text/plain") &&
+                        !contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") && // .docx
+                        !contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") && // .xlsx
+                        !contentType.equals("application/vnd.openxmlformats-officedocument.presentationml.presentation") && // .pptx
+                        !contentType.equals("image/gif")//
+
+                )
+        ) {
+            throw new StorageException("Invalid file type: " + contentType + " for " + finalFileName);
+        }
+        return finalFileName;
+    }
+
     /**
      * Loads a file as a Resource.
      * Resolves the file path relative to the root location and checks if it exists and is readable.
