@@ -8,6 +8,11 @@ import java.util.Objects;
 import java.util.UUID;
 
 
+/**
+ * Represents a file attachment associated with a task in the task tracker application.
+ * This entity is used to store metadata about the file, including its name, type, size,
+ * and the actual content of the file.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,6 +21,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "file_attachments")
 public class FileAttachment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", updatable = false, nullable = false)
@@ -28,13 +34,19 @@ public class FileAttachment {
     private String fileType;
     @Column(name = "f_size", nullable = false)
     private Long size;
-
+    /**
+     * The content of the file, stored as a byte array.
+     * This field is annotated with @Lob to indicate that it can store large objects.
+     */
     @Lob
     @Column(name = "file_content", columnDefinition = "BLOB")
     private byte[] fileContent;
-
+    /**
+     * The task to which this file attachment is associated.
+     * This field establishes a many-to-one relationship with the Task entity.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_id", nullable = false)
+    @JoinColumn(name = "fk_task_id", nullable = false)
     private Task task;
 
     @Override

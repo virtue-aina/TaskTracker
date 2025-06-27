@@ -5,6 +5,8 @@ import lombok.*;
 import lombok.AllArgsConstructor;
 import org.hibernate.proxy.HibernateProxy;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -65,11 +67,19 @@ public class Task {
     /**
      * The task list to which this task belongs.
      * This is a many-to-one relationship, where many tasks can belong to one task list.
-     * This field is lazily loaded to improve performance.
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_list_id")
     private TaskList taskList;
+
+    /**
+     * List of file attachments associated with this task.
+     * This is a one-to-many relationship, where one task can have multiple file attachments.
+     */
+    @Column
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<FileAttachment> fileAttachments = new ArrayList<>();
+
     /**
      * Timestamp when the task was created.
      * This field is required and cannot be null.
