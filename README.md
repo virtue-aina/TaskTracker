@@ -15,6 +15,8 @@ Tasktracker is a robust task management system built with Spring Boot that allow
 - Docker & Docker Compose
 - Lombok
 - Maven
+- Spring Web (for RESTful API)
+- Hibernate (as JPA implementation)
 
 ## Features
 
@@ -23,6 +25,7 @@ Tasktracker is a robust task management system built with Spring Boot that allow
 - Set task priorities (HIGH, MEDIUM, LOW)
 - Track task status (OPEN, CLOSED)
 - Set deadlines for tasks
+- File attachment support for tasks (database model ready, API implementation in progress)
 
 ## Prerequisites
 
