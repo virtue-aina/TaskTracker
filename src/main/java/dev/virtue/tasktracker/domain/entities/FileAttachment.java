@@ -3,7 +3,6 @@ package dev.virtue.tasktracker.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -27,20 +26,14 @@ public class FileAttachment {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
     @Column(name = "f_name", nullable = false)
-    private String fileName;
+    private String storedFileName;
     @Column(name = "original_f_name", nullable = false)
     private String OriginalFileName;
     @Column(name = "f_type", nullable = false)
     private String fileType;
     @Column(name = "f_size", nullable = false)
     private Long size;
-    /**
-     * The content of the file, stored as a byte array.
-     * This field is annotated with @Lob to indicate that it can store large objects.
-     */
-    @Lob
-    @Column(name = "file_content", columnDefinition = "BLOB")
-    private byte[] fileContent;
+
     /**
      * The task to which this file attachment is associated.
      * This field establishes a many-to-one relationship with the Task entity.
@@ -53,11 +46,13 @@ public class FileAttachment {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         FileAttachment that = (FileAttachment) o;
-        return Objects.equals(fileName, that.fileName) && Objects.equals(OriginalFileName, that.OriginalFileName) && Objects.equals(fileType, that.fileType) && Objects.equals(size, that.size) && Objects.deepEquals(fileContent, that.fileContent);
+        return Objects.equals(id, that.id) && Objects.equals(storedFileName, that.storedFileName) && Objects.equals(OriginalFileName, that.OriginalFileName) && Objects.equals(fileType, that.fileType) && Objects.equals(size, that.size) && Objects.equals(task, that.task);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fileName, OriginalFileName, fileType, size, Arrays.hashCode(fileContent));
+        return Objects.hash(id, storedFileName, OriginalFileName, fileType, size, task);
     }
+
+
 }
