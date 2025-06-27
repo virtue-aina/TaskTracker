@@ -17,6 +17,7 @@ Tasktracker is a robust task management system built with Spring Boot that allow
 - Maven
 - Spring Web (for RESTful API)
 - Hibernate (as JPA implementation)
+- SpringDoc OpenAPI (for API documentation with Swagger UI)
 
 ## Features
 
@@ -25,7 +26,8 @@ Tasktracker is a robust task management system built with Spring Boot that allow
 - Set task priorities (HIGH, MEDIUM, LOW)
 - Track task status (OPEN, CLOSED)
 - Set deadlines for tasks
-- File attachment support for tasks (database model ready, API implementation in progress)
+- File storage functionality implemented (supports images, PDFs, Office documents)
+- File attachment data model for tasks is ready (API integration in progress)
 
 ## Prerequisites
 
@@ -44,12 +46,20 @@ Tasktracker is a robust task management system built with Spring Boot that allow
    cd Tasktracker
    ```
 
-2. Start the application using Docker Compose:
+2. Start the PostgreSQL database using Docker Compose:
    ```
    docker-compose up -d
    ```
 
-   This will start both the PostgreSQL database and the application.
+   This will start the PostgreSQL database with the correct configuration.
+
+3. Build and run the application:
+   ```
+   mvn clean install
+   mvn spring-boot:run
+   ```
+
+   The application will be available at `http://localhost:8080`
 
 ### Manual Setup
 
@@ -62,7 +72,7 @@ Tasktracker is a robust task management system built with Spring Boot that allow
 2. Configure the database:
    - Ensure PostgreSQL is installed and running
    - Create a database named `tasktrackerdb`
-   - Create a user `tasktracker` with password `A_Strong_P@ssw0rd_2024!` (or update the credentials in `application.properties`)
+   - Create a user `tasktracker` with password `A_Strong_P@ssw0rd` (or update the credentials in `application.properties`)
 
 3. Build the application:
    ```
@@ -93,6 +103,19 @@ Tasktracker is a robust task management system built with Spring Boot that allow
 - `POST /api/tasks` - Create a new task
 - `PUT /api/tasks/{id}` - Update a task
 - `DELETE /api/tasks/{id}` - Delete a task
+
+## API Documentation
+
+The application includes Swagger UI for API documentation and testing:
+
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- API Docs: `http://localhost:8080/api-docs`
+
+You can use Swagger UI to:
+- Explore all available API endpoints
+- Test API calls directly from the browser
+- View request/response models and parameters
+- Execute API operations with custom parameters
 
 ## Testing
 
