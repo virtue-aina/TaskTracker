@@ -20,7 +20,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "file_attachments")
 public class FileAttachment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", updatable = false, nullable = false)
