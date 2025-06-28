@@ -4,7 +4,10 @@ import dev.virtue.tasktracker.exception.StorageException;
 
 public class FileValidator {
 
-    private static String getString(String fileName, String fileExtension) {
+    public static String extensionChecker(String fileName) {
+
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+
         //TODO: Check if the file extension ends with anything you expect
         if (fileName == null || fileName.isEmpty()) {
             throw new StorageException("File name cannot be empty");
@@ -17,4 +20,6 @@ public class FileValidator {
             return  fileName + "." + fileExtension;
         }
     }
+
+
 }

@@ -24,8 +24,8 @@ public class FileAttachment {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
-    @Column(name = "f_name", nullable = false)
-    private String storedFileName;
+    @Column(name = "sf_name", nullable = false)
+    private String serverFileName;
     @Column(name = "original_f_name", nullable = false)
     private String OriginalFileName;
     @Column(name = "f_type", nullable = false)
@@ -45,12 +45,12 @@ public class FileAttachment {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         FileAttachment that = (FileAttachment) o;
-        return Objects.equals(id, that.id) && Objects.equals(storedFileName, that.storedFileName) && Objects.equals(OriginalFileName, that.OriginalFileName) && Objects.equals(fileType, that.fileType) && Objects.equals(size, that.size) && Objects.equals(task, that.task);
+        return Objects.equals(id, that.id) && Objects.equals(serverFileName, that.serverFileName) && Objects.equals(OriginalFileName, that.OriginalFileName) && Objects.equals(fileType, that.fileType) && Objects.equals(size, that.size) && Objects.equals(task, that.task);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, storedFileName, OriginalFileName, fileType, size, task);
+        return Objects.hash(id, serverFileName, OriginalFileName, fileType, size, task);
     }
 
 }

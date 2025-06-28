@@ -2,6 +2,7 @@ package dev.virtue.tasktracker.filestorage.impl;
 
 import dev.virtue.tasktracker.exception.StorageException;
 import dev.virtue.tasktracker.filestorage.FileStorageService;
+import dev.virtue.tasktracker.utils.Validators.FileValidator;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -52,15 +54,21 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public String storeFile(MultipartFile file) {
         // validate file properties
-
-        String fileName = file.getOriginalFilename();
+        //TODO: GET ORIGINAL FILENAME
+        String fileName = file.getOriginalFilename();//done
+        //TODO: generate a unique identifier for the file
+        String uniqueId = UUID.randomUUID().toString();//done
+        //TODO: get the file extension
+        String fileExtension = FileValidator.extensionChecker(fileName);//done
+        //TODO: create with the unique identifier and file extension
+        String finalFileName = uniqueId + "." + fileExtension;
         if (file.isEmpty()) {
             throw new StorageException("Cannot store empty file " + fileName );
         }
-        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
-        String finalFileName = getString(fileName, fileExtension);
 
 // Validate and normalize the file path
+        //use "serverFileName" instead of original "finalFileName"
+        String finalFileName = FileValidator.extensionChecker(fileName);
         Path targetLocation = rootLocation
                 .resolve(Paths.get(finalFileName))
                 .normalize()
