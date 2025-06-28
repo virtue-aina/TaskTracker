@@ -13,7 +13,7 @@ public interface FileStorageService {
      * @param fileName the name to save the file as
      * @return the stored file name
      */
-    String storeFile(MultipartFile file, String fileName);
+    String storeFile(MultipartFile file);
 
     /**
      * Loads a file as a resource.

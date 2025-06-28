@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -55,13 +55,15 @@ public class FileStorageServiceImpl implements FileStorageService {
      * @return The final file name after storage
      */
     @Override
-    public String storeFile(MultipartFile file, String fileName) {
+    public String storeFile(MultipartFile file) {
         // validate file properties
+
+        String fileName = file.getOriginalFilename();
         if (file.isEmpty()) {
-            throw new StorageException("Cannot store empty file " + fileName);
+            throw new StorageException("Cannot store empty file " + fileName );
         }
-        String fileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-        String finalFileName = getString(file, fileName, fileExtension);
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String finalFileName = getString(fileName, fileExtension);
 
 // Validate and normalize the file path
         Path targetLocation = rootLocation
@@ -81,26 +83,22 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
 
-    private static String getString(MultipartFile file, String fileName, String fileExtension) {
-        String finalFileName = fileName + "." + fileExtension;
-
-        String contentType = file.getContentType();
-        // Validate the content type of the file
-        if (contentType == null ||
-                (!contentType.equals("image/jpeg") &&
-                        !contentType.equals("image/png") &&
-                        !contentType.equals("application/pdf") &&
-                        !contentType.equals("text/plain") &&
-                        !contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") && // .docx
-                        !contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") && // .xlsx
-                        !contentType.equals("application/vnd.openxmlformats-officedocument.presentationml.presentation") && // .pptx
-                        !contentType.equals("image/gif")//
-
-                )
-        ) {
-            throw new StorageException("Invalid file type: " + contentType + " for " + finalFileName);
+    private static String getString(String fileName, String fileExtension) {
+        //TODO: Check if the file extension ends with anything you expect
+        if (fileName == null || fileName.isEmpty()) {
+            throw new StorageException("File name cannot be empty");
         }
-        return finalFileName;
+
+        //TODO: move this check to either a utility class or a validation method.
+        //if it's a utility class, you can use it in other places as well and you can have
+        //many checks in that class.
+
+        if(fileExtension == null || fileExtension.endsWith(".exe") ||
+              fileExtension.endsWith(".bat") || fileExtension.endsWith(".sh")) {
+                throw new StorageException("Invalid file extension: " + fileExtension);
+          } else{
+            return  fileName + "." + fileExtension;
+        }
     }
 
     /**
