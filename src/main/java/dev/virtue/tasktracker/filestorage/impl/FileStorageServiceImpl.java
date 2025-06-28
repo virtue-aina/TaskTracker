@@ -44,15 +44,10 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
     /**
-     * Stores a file with the given name.
-     * Validates the file properties and ensures it is not empty.
-     * Validates the content type of the file.
-     * Normalizes the file path to prevent directory traversal attacks.
-     * Ensures the file is stored within the root directory.
-     * Checks if the file already exists and replaces it if necessary.
-     * @param file     The MultipartFile to store
-     * @param fileName The name to store the file as
-     * @return The final file name after storage
+     * Stores a file and returns the file name.
+     * Validates the file properties and checks for valid file extensions.
+     * @param file the file to store
+     * @return the stored file name
      */
     @Override
     public String storeFile(MultipartFile file) {
