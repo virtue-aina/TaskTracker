@@ -29,6 +29,22 @@ Tasktracker is a robust task management system built with Spring Boot that allow
 - File storage functionality implemented (supports images, PDFs, Office documents)
 - File attachment data model for tasks is ready (API integration in progress)
 
+### File Storage System
+
+The application includes a robust file storage system with the following capabilities:
+- File upload and storage with validation
+- File retrieval 
+- File deletion
+- Metadata tracking (original filename, stored filename, file type, size)
+
+The file storage system is designed to be secure, preventing directory traversal attacks and restricting potentially harmful file types. While the data model and storage service are fully implemented, the API endpoints for file operations are still in development.
+
+#### File Storage Configuration
+
+The application's file storage can be configured through the following properties in `application.properties`:
+
+These properties allow you to customize the file upload behavior and storage location according to your requirements.
+
 ## Prerequisites
 
 - Java 24 or higher
