@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,10 +59,15 @@ public class FileStorageServiceImpl implements FileStorageService {
         String fileName = file.getOriginalFilename();//done
         //TODO: generate a unique identifier for the file
         String uniqueId = UUID.randomUUID().toString();//done
-        //TODO: get the file extension
+        //TODO:validate mime type
+        String mimeType = file.getContentType();
+
+        // get the file extension
+        // use a utility method to check the file extension
         String fileExtension = FileValidator.extensionChecker(fileName);//done
         //TODO: create with the unique identifier and file extension
         String finalFileName = uniqueId + "." + fileExtension;
+        //TODO:
         if (file.isEmpty()) {
             throw new StorageException("Cannot store empty file " + fileName );
         }
@@ -83,24 +89,6 @@ public class FileStorageServiceImpl implements FileStorageService {
             return finalFileName;
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + finalFileName, e);
-        }
-    }
-
-    private static String getString(String fileName, String fileExtension) {
-        //TODO: Check if the file extension ends with anything you expect
-        if (fileName == null || fileName.isEmpty()) {
-            throw new StorageException("File name cannot be empty");
-        }
-
-        //TODO: move this check to either a utility class or a validation method.
-        //if it's a utility class, you can use it in other places as well and you can have
-        //many checks in that class.
-
-        if(fileExtension == null || fileExtension.endsWith(".exe") ||
-              fileExtension.endsWith(".bat") || fileExtension.endsWith(".sh")) {
-                throw new StorageException("Invalid file extension: " + fileExtension);
-          } else{
-            return  fileName + "." + fileExtension;
         }
     }
 
