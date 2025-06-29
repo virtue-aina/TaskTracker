@@ -5,13 +5,11 @@ import org.apache.tika.Tika;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+
 
 @Component
 public class FileValidator {
@@ -33,24 +31,28 @@ public class FileValidator {
             MediaType.valueOf("application/vnd.ms-excel"),
             MediaType.valueOf("application/vnd.ms-powerpoint")
     );
+    private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList("jpg", "jpeg", "png", "gif", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx");
+
     public String validateExtension(String fileName) {
-
-        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-        //TODO: Check if the file extension ends with anything you expect
         if (fileName == null || fileName.isEmpty()) {
             throw new StorageException("File name cannot be empty");
         }
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
-        if(fileExtension == null || fileExtension.endsWith(".exe") ||
-                fileExtension.endsWith(".bat") || fileExtension.endsWith(".sh")) {
+        if(!ALLOWED_EXTENSIONS.contains(fileExtension)) {
             throw new StorageException("Invalid file extension: " + fileExtension);
         } else{
-            return  fileName + "." + fileExtension;
+            return fileExtension;
         }
     }
-
-    public String validateContent(MultipartFile file) {
+    /**
+     * Validates the content type of the uploaded file.
+     * Uses Apache Tika to detect the media type of the file.
+     * Throws an exception if the file is empty or has an unsupported media type.
+     * @param file the uploaded file
+     * @return the detected media type
+     */
+    public MediaType validateContent(MultipartFile file) {
 
         if (file == null || file.isEmpty()) {
             throw new StorageException("File cannot be null or empty");
@@ -64,9 +66,11 @@ public class FileValidator {
             throw new StorageException("Could not determine file type", e);
         }
 
-
-
-
+        if (!ALL_ALLOWED_TYPES.contains(detectedMediaType)) {
+            throw new StorageException("Unsupported file type: " + detectedMediaType);
+        }else {
+            return detectedMediaType;
+        }
 
     }
 

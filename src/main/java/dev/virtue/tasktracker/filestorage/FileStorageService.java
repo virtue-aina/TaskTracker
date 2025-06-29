@@ -10,7 +10,6 @@ public interface FileStorageService {
     /**
      * Stores a file and returns the file name.
      * @param file     the file to store
-     * @param fileName the name to save the file as
      * @return the stored file name
      */
     String storeFile(MultipartFile file);
