@@ -24,6 +24,12 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class FileStorageServiceImpl implements FileStorageService {
+    private final FileValidator fileValidator;
+
+    public FileStorageServiceImpl(FileValidator fileValidator) {
+        this.fileValidator = fileValidator;
+    }
+
     /**
      * The location where files will be stored.
      * This can be configured via application properties.
@@ -63,7 +69,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
         // get the file extension
         // use a utility method to check the file extension
-        String fileExtension = FileValidator.extensionChecker(fileName);//done
+        String fileExtension = fileValidator.validateExtension(fileName);//done
         //TODO: create with the unique identifier and file extension
         String finalFileName = uniqueId + "." + fileExtension;
         //TODO:
@@ -73,7 +79,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
 // Validate and normalize the file path
         //use "serverFileName" instead of original "finalFileName"
-        String finalFileName = FileValidator.extensionChecker(fileName);
+        String finalFileName = fileValidator.validateExtension(fileName);
         Path targetLocation = rootLocation
                 .resolve(Paths.get(finalFileName))
                 .normalize()
