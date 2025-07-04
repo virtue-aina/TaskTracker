@@ -13,7 +13,9 @@ import java.util.List;
 
 @Component
 public class FileValidator {
-
+    /**
+     * Tika is an Apache content analysis toolkit that can detect the media type of files.
+     */
     private final Tika tika;
 
     public FileValidator() {
@@ -45,6 +47,7 @@ public class FileValidator {
             return fileExtension;
         }
     }
+
     /**
      * Validates the content type of the uploaded file.
      * Uses Apache Tika to detect the media type of the file.
