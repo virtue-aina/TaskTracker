@@ -8,9 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -25,11 +25,9 @@ import java.util.UUID;
 @Slf4j
 public class FileStorageServiceImpl implements FileStorageService {
     private final FileValidator fileValidator;
-
     public FileStorageServiceImpl(FileValidator fileValidator) {
         this.fileValidator = fileValidator;
     }
-
     /**
      * The location where files will be stored.
      * This can be configured via application properties.
@@ -59,26 +57,21 @@ public class FileStorageServiceImpl implements FileStorageService {
      */
     @Override
     public String storeFile(MultipartFile file) {
-        // validate file properties
-        //TODO: GET ORIGINAL FILENAME
-        String fileName = file.getOriginalFilename();//done
-        //TODO: generate a unique identifier for the file
-        String uniqueId = UUID.randomUUID().toString();//done
-        //TODO:validate mime type
-        String mimeType = file.getContentType();
+        //using the file name predominantly for storage purposes
+        String fileName = file.getOriginalFilename();
+        //Unique identifier for the file
+        String uniqueId = UUID.randomUUID().toString();
 
-        // get the file extension
-        // use a utility method to check the file extension
-        String fileExtension = fileValidator.validateExtension(fileName);//done
-        //TODO: create with the unique identifier and file extension
-        String finalFileName = uniqueId + "." + fileExtension;
-        //TODO:
-        if (file.isEmpty()) {
-            throw new StorageException("Cannot store empty file " + fileName );
-        }
 
-// Validate and normalize the file path
-        //use "serverFileName" instead of original "finalFileName"
+
+
+        //TODO: Rename this variable to something that reflects its purpose
+        String fileExtension = fileValidator.validateExtension(fileName);
+        //Output should maybe be a file?
+        fileValidator.validateContent(file);
+        String constructedFileName = uniqueId + "." + fileExtension;
+
+        //use "serverFileName" instead of original "finalFileName"- tis
         String finalFileName = fileValidator.validateExtension(fileName);
         Path targetLocation = rootLocation
                 .resolve(Paths.get(finalFileName))
