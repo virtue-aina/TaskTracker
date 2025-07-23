@@ -28,17 +28,11 @@ public class FileStorageServiceImpl implements FileStorageService {
     public FileStorageServiceImpl(FileValidator fileValidator) {
         this.fileValidator = fileValidator;
     }
-    /**
-     * The location where files will be stored.
-     * This can be configured via application properties.
-     */
+
     @Value("${app.storage.location:uploads}")
     private String storageLocation;
     private Path rootLocation;
-    /**
-     * Initializes the storage directory.
-     * Creates the directory if it does not exist.
-     */
+
     @PostConstruct
     @Override
     public void init(){
@@ -49,6 +43,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             throw new StorageException("Could not create storage directory", e);
         }
     }
+
     /**
      * Stores a file and returns the file name.
      * Validates the file properties and checks for valid file extensions.

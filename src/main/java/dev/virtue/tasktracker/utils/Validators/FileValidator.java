@@ -10,22 +10,18 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * FileValidator is a utility class that validates file extensions and content types.
+ * It uses Apache Tika to detect the media type of files and checks against allowed types.
+ */
 
 @Component
 public class FileValidator {
-    /**
-     * Tika is an Apache content analysis toolkit that can detect the media type of files.
-     */
     private final Tika tika;
 
     public FileValidator() {
         this.tika = new Tika();
     }
-
-    /**
-     * List of allowed media types for file uploads.
-     * This list can be extended to include more types as needed.
-     */
     private static final List<MediaType> ALL_ALLOWED_TYPES = Arrays.asList(
             MediaType.IMAGE_JPEG, MediaType.IMAGE_PNG, MediaType.IMAGE_GIF,
             MediaType.APPLICATION_PDF, MediaType.valueOf("application/msword"),
@@ -48,13 +44,6 @@ public class FileValidator {
         }
     }
 
-    /**
-     * Validates the content type of the uploaded file.
-     * Uses Apache Tika to detect the media type of the file.
-     * Throws an exception if the file is empty or has an unsupported media type.
-     * @param file the uploaded file
-     * @return the detected media type
-     */
     public MediaType validateContent(MultipartFile file) {
 
         if (file == null || file.isEmpty()) {

@@ -2,18 +2,11 @@ package dev.virtue.tasktracker.mappers;
 
 import dev.virtue.tasktracker.domain.dto.TaskDto;
 import dev.virtue.tasktracker.domain.entities.Task;
-
+/**
+ * Mapper interface for converting between Task entities and TaskDto objects.
+ * This interface defines methods to convert a TaskDto to a Task entity and vice versa.
+ */
 public interface TaskMapper {
-    /**
-     * Converts a DTO to an entity
-     * @param dto the DTO to convert
-     * @return the entity
-     */
     Task fromDto(TaskDto dto);
-    /**
-     * Converts an entity to a DTO
-     * @param task the entity to convert
-     * @return the DTO
-     */
     TaskDto toDto(Task task);
 }

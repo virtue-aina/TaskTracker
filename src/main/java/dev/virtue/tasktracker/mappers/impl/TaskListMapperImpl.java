@@ -19,12 +19,6 @@ public class TaskListMapperImpl implements TaskListMapper {
         this.taskMapper = taskMapper;
     }
 
-    /**
-     * Converts a DTO to an entity
-     *
-     * @param taskListDto the DTO to convert
-     * @return the entity
-     */
     @Override
     public TaskList fromDto(TaskListDto taskListDto) {
 
@@ -42,12 +36,6 @@ public class TaskListMapperImpl implements TaskListMapper {
         );
     }
 
-    /**
-     * Converts an entity to a DTO
-     *
-     * @param taskList the entity to convert
-     * @return the DTO
-     */
     @Override
     public TaskListDto toDto(TaskList taskList) {
         return
